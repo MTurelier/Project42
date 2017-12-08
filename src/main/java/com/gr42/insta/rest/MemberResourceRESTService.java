@@ -82,6 +82,9 @@ public class MemberResourceRESTService {
         return member;
     }
 
+
+
+
     /**
      * Creates a new member from the values provided. Performs validation, and will return a JAX-RS response with either 200 ok,
      * or with a map of fields, and related errors.
