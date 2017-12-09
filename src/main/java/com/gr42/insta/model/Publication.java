@@ -1,46 +1,87 @@
+/*
+ * JBoss, Home of Professional Open Source
+ * Copyright 2013, Red Hat, Inc. and/or its affiliates, and individual
+ * contributors by the @authors tag. See the copyright.txt in the
+ * distribution for a full listing of individual contributors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.gr42.insta.model;
 
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.ws.rs.FormParam;
-import org.jboss.resteasy.annotations.providers.multipart.PartType;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
+
+@SuppressWarnings("serial")
+@Entity
 @XmlRootElement
-public class Publication {
+public class Publication implements Serializable {
+
     @Id
     @GeneratedValue
     private Long id;
+
+    @Size(min = 1, max = 25)
+    @Pattern(regexp = "[^0-9]*", message = "Must not contain numbers")
+    private String imageName;
+
+    private String comment;
+
+
+
+    @Column(name = "image")
+    private Byte image;
 
     public Long getId() {
         return id;
     }
 
-    private String comment;
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getImageName() {
+        return imageName;
+    }
+
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
+    }
 
     public String getComment() {
         return comment;
     }
 
-    public String imageName;
-
     public void setComment(String comment) {
         this.comment = comment;
     }
 
-    private byte[] image;
-
-    public byte[] getImage() {
+    public Byte getImage() {
         return image;
     }
 
-    @FormParam("uploadedImage")
-    @PartType("application/octet-stream")
-    public void setImage(byte[] image) {
+    public void setImage(Byte image) {
         this.image = image;
-    }
-
-    public void setImageName(String imageName) {
-        this.imageName = imageName;
     }
 }
