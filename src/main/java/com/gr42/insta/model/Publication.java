@@ -43,7 +43,6 @@ public class Publication implements Serializable {
     private Long id;
 
     @Size(min = 1, max = 25)
-    @Pattern(regexp = "[^0-9]*", message = "Must not contain numbers")
     private String imageName;
 
     private String comment;
@@ -51,7 +50,7 @@ public class Publication implements Serializable {
 
 
     @Column(name = "image")
-    private Byte image;
+    private String image;
 
     public Long getId() {
         return id;
@@ -77,11 +76,11 @@ public class Publication implements Serializable {
         this.comment = comment;
     }
 
-    public Byte getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(Byte image) {
+    public void setImage(String image) {
         this.image = image;
     }
 }

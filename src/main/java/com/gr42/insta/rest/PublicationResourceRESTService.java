@@ -53,6 +53,8 @@ public class PublicationResourceRESTService {
     @Inject
     PublicationManager publications;
 
+    private String IMAGE_STORAGE_FILE = "C:\\Users\\Turel\\front-app\\target\\front-app.war";
+
 
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
@@ -68,7 +70,10 @@ public class PublicationResourceRESTService {
                 img = IOUtils.toByteArray(inputStream);
             String imageName = "publication-" + id + ".jpg";
             pub.setImageName(imageName);
+            pub.setImage("localhost:8080//front-app//"+ imageName);
             FileUtils.writeByteArrayToFile(new File(imageName), img);
+            publications.updateImageName(pub);
+            String pathName = System.getProperty("IMAGE_STORAGE_FILE", IMAGE_STORAGE_FILE);
         } finally {
         }
         return pub;
